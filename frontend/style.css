@@ -89,6 +89,30 @@ body {
     cursor: pointer;
 }
 
+.reportButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.reportButtons button {
+    background: #5a3e2b;
+    color: white;
+    border: 0;
+    border-radius: 6px;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+#reportNote {
+    margin: 6px 0 10px;
+}
+
+.reportTableWrap {
+    overflow-x: auto;
+}
+
 
 
 .deleteCustomerBtn {

@@ -14,6 +14,10 @@
 
     const customerTableBody = document.getElementById("customerTableBody");
     const lessonTableBody = document.getElementById("lessonTableBody");
+    const reportNoteEl = document.getElementById("reportNote");
+    const reportTableHeadRow = document.getElementById("reportTableHeadRow");
+    const reportTableBody = document.getElementById("reportTableBody");
+    const viewReportBtns = document.querySelectorAll(".viewReportBtn");
 
     const addCustomerForm = document.getElementById("addCustomerForm");
     const updateCustomerForm = document.getElementById("updateCustomerForm");
@@ -140,6 +144,78 @@
                     syncNoteEl.textContent = "Error: " + (error?.message || JSON.stringify(error));
                 }
             });
+    }
+
+    function clearReportTable() {
+        reportTableHeadRow.innerHTML = "";
+        reportTableBody.innerHTML = "";
+    }
+
+    function drawReportRows(rows) {
+        clearReportTable();
+
+        if (!rows || rows.length === 0) {
+            if (reportNoteEl) {
+                reportNoteEl.textContent = "No rows returned from this view.";
+            }
+            return;
+        }
+
+        const columns = Object.keys(rows[0]);
+
+        for (let i = 0; i < columns.length; i += 1) {
+            const th = document.createElement("th");
+            th.textContent = columns[i];
+            reportTableHeadRow.appendChild(th);
+        }
+
+        for (let r = 0; r < rows.length; r += 1) {
+            const tr = document.createElement("tr");
+            for (let c = 0; c < columns.length; c += 1) {
+                const key = columns[c];
+                const td = document.createElement("td");
+                const value = rows[r][key];
+                td.textContent = value == null ? "" : String(value);
+                tr.appendChild(td);
+            }
+            reportTableBody.appendChild(tr);
+        }
+    }
+
+    function loadViewReport(viewName) {
+        if (reportNoteEl) {
+            reportNoteEl.textContent = "Loading " + viewName + "...";
+        }
+
+        supabaseClient
+            .from(viewName)
+            .select("*")
+            .then(function (result) {
+                if (result.error) {
+                    throw result.error;
+                }
+
+                if (reportNoteEl) {
+                    reportNoteEl.textContent = "Loaded " + (result.data || []).length + " rows from " + viewName + ".";
+                }
+                drawReportRows(result.data || []);
+            })
+            .catch(function (error) {
+                clearReportTable();
+                if (reportNoteEl) {
+                    reportNoteEl.textContent = "View error: " + error.message;
+                }
+            });
+    }
+
+    for (let i = 0; i < viewReportBtns.length; i += 1) {
+        viewReportBtns[i].addEventListener("click", function () {
+            const viewName = String(viewReportBtns[i].dataset.view || "");
+            if (!viewName) {
+                return;
+            }
+            loadViewReport(viewName);
+        });
     }
 
     addCustomerForm.addEventListener("submit", function (event) {
