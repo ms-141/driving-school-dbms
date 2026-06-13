@@ -3,7 +3,7 @@ let lessons = [];
 
 const SUPABASE_URL = "https://vvabnyrgongzakzpnqoj.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2YWJueXJnb25nemFrenBucW9qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5NjY0MzYsImV4cCI6MjA5NjU0MjQzNn0.NdoZwgVueojpeCAI3JVcSh9cfuDfy4F8hwGYZ4new_c";
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const totalLessonsEl = document.getElementById("totalLessons");
 const completedLessonsEl = document.getElementById("completedLessons");
@@ -101,14 +101,14 @@ function redrawEverything() {
 }
 
 function loadCustomers() {
-    return supabase
+    return supabaseClient
         .from("customers")
         .select("*")
         .order("customer_id", { ascending: true });
 }
 
 function loadLessons() {
-    return supabase
+    return supabaseClient
         .from("lessons")
         .select("*")
         .order("lesson_id", { ascending: true });
@@ -166,7 +166,7 @@ addCustomerForm.addEventListener("submit", function (event) {
         other_customer_details: document.getElementById("customerDetails").value.trim()
     };
 
-    supabase.from("customers").insert([newCustomer]).then(function (result) {
+    supabaseClient.from("customers").insert([newCustomer]).then(function (result) {
         if (result.error) {
             alert(result.error.message);
             return;
@@ -208,7 +208,7 @@ updateCustomerForm.addEventListener("submit", function (event) {
         other_customer_details: document.getElementById("updateCustomerDetails").value.trim()
     };
 
-    supabase
+    supabaseClient
         .from("customers")
         .update(updatedCustomer)
         .eq("customer_id", id)
@@ -259,7 +259,7 @@ addLessonForm.addEventListener("submit", function (event) {
         other_lesson_details: document.getElementById("addLessonDetails").value.trim()
     };
 
-    supabase.from("lessons").insert([newLesson]).then(function (result) {
+    supabaseClient.from("lessons").insert([newLesson]).then(function (result) {
         if (result.error) {
             alert(result.error.message);
             return;
@@ -299,7 +299,7 @@ updateLessonForm.addEventListener("submit", function (event) {
         other_lesson_details: document.getElementById("lessonDetails").value.trim()
     };
 
-    supabase
+    supabaseClient
         .from("lessons")
         .update(updatedLesson)
         .eq("lesson_id", id)
@@ -350,7 +350,7 @@ customerTableBody.addEventListener("click", function (event) {
         return;
     }
 
-    supabase
+    supabaseClient
         .from("lessons")
         .delete()
         .eq("customer_id", id)
@@ -360,7 +360,7 @@ customerTableBody.addEventListener("click", function (event) {
                 return;
             }
 
-            supabase
+            supabaseClient
                 .from("customers")
                 .delete()
                 .eq("customer_id", id)
@@ -410,7 +410,7 @@ lessonTableBody.addEventListener("click", function (event) {
         return;
     }
 
-    supabase
+    supabaseClient
         .from("lessons")
         .delete()
         .eq("lesson_id", id)
