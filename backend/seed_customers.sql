@@ -50,8 +50,74 @@ do update set
   cell_mobile_phone_number = excluded.cell_mobile_phone_number,
   other_customer_details = excluded.other_customer_details;
 
--- Quick check
+-- Make sure lesson status lookup values exist
+insert into public.ref_lesson_status (lesson_status_code, lesson_status_description)
+values
+  ('SCH', 'Scheduled'),
+  ('COMP', 'Completed'),
+  ('CANC', 'Cancelled'),
+  ('NOSH', 'No-show')
+on conflict (lesson_status_code)
+do update set lesson_status_description = excluded.lesson_status_description;
+
+-- Minimal instructor and vehicle rows for lesson foreign keys
+insert into public.staff (staff_id, first_name, last_name)
+values
+  (1, 'Alex', 'Instructor'),
+  (2, 'Jordan', 'Instructor')
+on conflict (staff_id)
+do update set
+  first_name = excluded.first_name,
+  last_name = excluded.last_name;
+
+insert into public.vehicles (vehicle_id, vehicle_details)
+values
+  (1, 'Honda Civic - Auto'),
+  (2, 'Toyota Corolla - Manual')
+on conflict (vehicle_id)
+do update set vehicle_details = excluded.vehicle_details;
+
+-- Seed lessons table with 10 rows
+insert into public.lessons (
+  lesson_id,
+  customer_id,
+  lesson_status_code,
+  vehicle_id,
+  staff_id,
+  lesson_date,
+  lesson_time,
+  price,
+  other_lesson_details
+)
+values
+  (201, 101, 'SCH',  1, 1, '2026-03-03', '09:00', 65.00, 'City driving practice'),
+  (202, 102, 'COMP', 2, 1, '2026-03-04', '10:00', 70.00, 'Completed highway session'),
+  (203, 103, 'SCH',  1, 2, '2026-03-05', '11:00', 65.00, 'Parking focus'),
+  (204, 104, 'CANC', 2, 2, '2026-03-06', '13:00', 70.00, 'Cancelled by student'),
+  (205, 105, 'COMP', 1, 1, '2026-03-07', '14:00', 75.00, 'Completed defensive driving'),
+  (206, 106, 'NOSH', 2, 2, '2026-03-08', '15:00', 70.00, 'No-show'),
+  (207, 107, 'SCH',  1, 1, '2026-03-09', '09:30', 65.00, 'Lane change drills'),
+  (208, 108, 'SCH',  2, 2, '2026-03-10', '10:30', 70.00, 'Manual clutch practice'),
+  (209, 109, 'COMP', 1, 1, '2026-03-11', '12:00', 80.00, 'Road test prep'),
+  (210, 110, 'SCH',  2, 2, '2026-03-12', '16:00', 75.00, 'Evening session')
+on conflict (lesson_id)
+do update set
+  customer_id = excluded.customer_id,
+  lesson_status_code = excluded.lesson_status_code,
+  vehicle_id = excluded.vehicle_id,
+  staff_id = excluded.staff_id,
+  lesson_date = excluded.lesson_date,
+  lesson_time = excluded.lesson_time,
+  price = excluded.price,
+  other_lesson_details = excluded.other_lesson_details;
+
+-- Quick checks
 select customer_id, first_name, last_name, customer_status_code, amount_outstanding
 from public.customers
 where customer_id between 101 and 110
 order by customer_id;
+
+select lesson_id, customer_id, staff_id, vehicle_id, lesson_status_code, lesson_date, lesson_time, price
+from public.lessons
+where lesson_id between 201 and 210
+order by lesson_id;
