@@ -19,9 +19,6 @@
     const updateCustomerForm = document.getElementById("updateCustomerForm");
     const addLessonForm = document.getElementById("addLessonForm");
     const updateLessonForm = document.getElementById("updateLessonForm");
-    const exportJsonBtn = document.getElementById("exportJsonBtn");
-    const importCustomersFile = document.getElementById("importCustomersFile");
-    const importCustomersBtn = document.getElementById("importCustomersBtn");
 
     function money(value) {
         return "$" + Number(value).toFixed(2);
@@ -143,122 +140,6 @@
                     syncNoteEl.textContent = "Error: " + (error?.message || JSON.stringify(error));
                 }
             });
-    }
-
-    function exportDataToJson() {
-        const payload = {
-            exported_at: new Date().toISOString(),
-            customers: customers,
-            lessons: lessons
-        };
-
-        const text = JSON.stringify(payload, null, 2);
-        const blob = new Blob([text], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-
-        link.href = url;
-        link.download = "driving-school-export.json";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(url);
-
-        if (syncNoteEl) {
-            syncNoteEl.textContent = "Exported JSON file with current records.";
-        }
-    }
-
-    function normalizeCustomerRows(parsed) {
-        let rows = [];
-
-        if (Array.isArray(parsed)) {
-            rows = parsed;
-        } else if (parsed && Array.isArray(parsed.customers)) {
-            rows = parsed.customers;
-        }
-
-        const cleaned = [];
-        for (let i = 0; i < rows.length; i += 1) {
-            const row = rows[i];
-            if (!row || row.customer_id == null) {
-                continue;
-            }
-
-            cleaned.push({
-                customer_id: Number(row.customer_id),
-                customer_address_id: row.customer_address_id == null ? null : Number(row.customer_address_id),
-                customer_status_code: String(row.customer_status_code || "GOOD"),
-                date_became_customer: row.date_became_customer || null,
-                date_of_birth: row.date_of_birth || null,
-                first_name: row.first_name || "",
-                last_name: row.last_name || "",
-                amount_outstanding: Number(row.amount_outstanding || 0),
-                email_address: row.email_address || "",
-                phone_number: row.phone_number || "",
-                cell_mobile_phone_number: row.cell_mobile_phone_number || "",
-                other_customer_details: row.other_customer_details || ""
-            });
-        }
-
-        return cleaned;
-    }
-
-    function importCustomersJsonFile(file) {
-        if (!file) {
-            alert("Choose a JSON file first.");
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = function () {
-            let parsed = null;
-            try {
-                parsed = JSON.parse(String(reader.result || ""));
-            } catch (error) {
-                alert("Invalid JSON file.");
-                return;
-            }
-
-            const rows = normalizeCustomerRows(parsed);
-            if (rows.length === 0) {
-                alert("No customer rows found in JSON.");
-                return;
-            }
-
-            supabaseClient
-                .from("customers")
-                .upsert(rows, { onConflict: "customer_id" })
-                .then(function (result) {
-                    if (result.error) {
-                        alert(result.error.message);
-                        return;
-                    }
-
-                    if (syncNoteEl) {
-                        syncNoteEl.textContent = "Imported " + rows.length + " customers from JSON.";
-                    }
-                    loadData();
-                });
-        };
-
-        reader.readAsText(file);
-    }
-
-    if (exportJsonBtn) {
-        exportJsonBtn.addEventListener("click", function () {
-            exportDataToJson();
-        });
-    }
-
-    if (importCustomersBtn) {
-        importCustomersBtn.addEventListener("click", function () {
-            if (!importCustomersFile || !importCustomersFile.files || importCustomersFile.files.length === 0) {
-                alert("Choose a JSON file first.");
-                return;
-            }
-            importCustomersJsonFile(importCustomersFile.files[0]);
-        });
     }
 
     addCustomerForm.addEventListener("submit", function (event) {

@@ -29,34 +29,6 @@ body {
     flex-direction: column;
 }
 
-.dataTools {
-    margin-bottom: 20px;
-    padding: 12px;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.2);
-    display: grid;
-    gap: 10px;
-}
-
-.dataTools h2 {
-    margin: 0;
-}
-
-.dataTools button,
-.dataTools input {
-    padding: 8px 10px;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.dataTools button {
-    cursor: pointer;
-    background: saddlebrown;
-    color: white;
-    border: 0;
-    font-weight: 600;
-}
-
 #forms {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
