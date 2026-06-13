@@ -3,6 +3,10 @@ body {
     color: black
 }
 
+* {
+    box-sizing: border-box;
+}
+
 .navbar {
     color: black;
 }
@@ -25,6 +29,66 @@ body {
     flex-direction: column;
 }
 
+#forms {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.formSection {
+    margin-bottom: 24px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+}
+
+.formSection form {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+}
+
+.formSection input,
+.formSection select,
+.formSection button {
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.formSection button {
+    cursor: pointer;
+    background: saddlebrown;
+    color: white;
+    border: 0;
+    font-weight: 600;
+}
+
+.tableSection {
+    margin-bottom: 24px;
+}
+
+.tableSection table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.tableSection th,
+.tableSection td {
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    text-align: left;
+}
+
+.tableSection button {
+    margin-right: 6px;
+    padding: 5px 9px;
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
 
 
 .deleteCustomerBtn {
@@ -34,4 +98,15 @@ body {
     border-radius: 6px;
     padding: 6px 10px;
     cursor: pointer;
+}
+
+.editCustomerBtn,
+.editLessonBtn {
+    background: #f4a261;
+    color: black;
+}
+
+.deleteLessonBtn {
+    background: red;
+    color: white;
 }

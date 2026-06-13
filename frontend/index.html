@@ -22,60 +22,139 @@
         </div>
         <div class="infoChange">
             <h1>CRUD operations</h1>
-            <p>Loading data from ../test.json</p>
+            <p id="syncNote">Loading data from ./test.json</p>
+            <div id="forms">
+                <section class="formSection">
+                    <h2>Add Customer</h2>
+                    <form id="addCustomerForm">
+                        <label for="customerFirstName">First Name</label>
+                        <input id="customerFirstName" name="first_name" type="text" required>
 
-            <section class="formSection">
-                <h2>Add Customer</h2>
-                <form id="addCustomerForm">
-                    <label for="customerFirstName">First Name</label>
-                    <input id="customerFirstName" name="first_name" type="text" required>
+                        <label for="customerLastName">Last Name</label>
+                        <input id="customerLastName" name="last_name" type="text" required>
 
-                    <label for="customerLastName">Last Name</label>
-                    <input id="customerLastName" name="last_name" type="text" required>
+                        <label for="customerEmail">Email</label>
+                        <input id="customerEmail" name="email_address" type="email" required>
 
-                    <label for="customerEmail">Email</label>
-                    <input id="customerEmail" name="email_address" type="email" required>
+                        <label for="customerPhone">Phone</label>
+                        <input id="customerPhone" name="phone_number" type="tel" required>
 
-                    <label for="customerPhone">Phone</label>
-                    <input id="customerPhone" name="phone_number" type="tel" required>
+                        <label for="customerStatus">Status</label>
+                        <select id="customerStatus" name="customer_status_code" required>
+                            <option value="GOOD">GOOD</option>
+                            <option value="BAD">BAD</option>
+                        </select>
 
-                    <label for="customerStatus">Status</label>
-                    <select id="customerStatus" name="customer_status_code" required>
-                        <option value="GOOD">GOOD</option>
-                        <option value="BAD">BAD</option>
-                    </select>
+                        <button type="submit">Create Customer</button>
+                    </form>
+                </section>
 
-                    <button type="submit">Create Customer</button>
-                </form>
-            </section>
+                <section class="formSection">
+                    <h2>Update Customer</h2>
+                    <form id="updateCustomerForm">
+                        <label for="updateCustomerId">Customer ID</label>
+                        <input id="updateCustomerId" name="customer_id" type="number" min="1" required>
 
-            <section class="formSection">
-                <h2>Update Lesson</h2>
-                <form id="updateLessonForm">
-                    <label for="lessonId">Lesson ID</label>
-                    <input id="lessonId" name="lesson_id" type="number" required>
+                        <label for="updateCustomerFirstName">First Name</label>
+                        <input id="updateCustomerFirstName" name="first_name" type="text" required>
 
-                    <label for="lessonDate">Lesson Date</label>
-                    <input id="lessonDate" name="lesson_date" type="date" required>
+                        <label for="updateCustomerLastName">Last Name</label>
+                        <input id="updateCustomerLastName" name="last_name" type="text" required>
 
-                    <label for="lessonTime">Lesson Time</label>
-                    <input id="lessonTime" name="lesson_time" type="time" required>
+                        <label for="updateCustomerEmail">Email</label>
+                        <input id="updateCustomerEmail" name="email_address" type="email" required>
 
-                    <label for="lessonStatus">Lesson Status</label>
-                    <select id="lessonStatus" name="lesson_status_code" required>
-                        <option value="SCH">SCH</option>
-                        <option value="COMP">COMP</option>
-                        <option value="CANC">CANC</option>
-                        <option value="NOSH">NOSH</option>
-                    </select>
+                        <label for="updateCustomerPhone">Phone</label>
+                        <input id="updateCustomerPhone" name="phone_number" type="tel" required>
 
-                    <label for="lessonPrice">Price</label>
-                    <input id="lessonPrice" name="price" type="number" min="0" step="0.01" required>
+                        <label for="updateCustomerStatus">Status</label>
+                        <select id="updateCustomerStatus" name="customer_status_code" required>
+                            <option value="GOOD">GOOD</option>
+                            <option value="BAD">BAD</option>
+                        </select>
 
-                    <button type="submit">Update Lesson</button>
-                </form>
-            </section>
+                        <label for="updateCustomerOutstanding">Outstanding</label>
+                        <input id="updateCustomerOutstanding" name="amount_outstanding" type="number" min="0" step="0.01" required>
 
+                        <button type="submit">Update Customer</button>
+                    </form>
+                </section>
+
+                <section class="formSection">
+                    <h2>Add Lesson</h2>
+                    <form id="addLessonForm">
+                        <label for="addLessonCustomerId">Customer ID</label>
+                        <input id="addLessonCustomerId" name="customer_id" type="number" min="1" required>
+
+                        <label for="addLessonStaffId">Staff ID</label>
+                        <input id="addLessonStaffId" name="staff_id" type="number" min="1" required>
+
+                        <label for="addLessonVehicleId">Vehicle ID</label>
+                        <input id="addLessonVehicleId" name="vehicle_id" type="number" min="1" required>
+
+                        <label for="addLessonDate">Lesson Date</label>
+                        <input id="addLessonDate" name="lesson_date" type="date" required>
+
+                        <label for="addLessonTime">Lesson Time</label>
+                        <input id="addLessonTime" name="lesson_time" type="time" required>
+
+                        <label for="addLessonStatus">Lesson Status</label>
+                        <select id="addLessonStatus" name="lesson_status_code" required>
+                            <option value="SCH">SCH</option>
+                            <option value="COMP">COMP</option>
+                            <option value="CANC">CANC</option>
+                            <option value="NOSH">NOSH</option>
+                        </select>
+
+                        <label for="addLessonPrice">Price</label>
+                        <input id="addLessonPrice" name="price" type="number" min="0" step="0.01" required>
+
+                        <label for="addLessonDetails">Details</label>
+                        <input id="addLessonDetails" name="other_lesson_details" type="text">
+
+                        <button type="submit">Create Lesson</button>
+                    </form>
+                </section>
+
+                <section class="formSection">
+                    <h2>Update Lesson</h2>
+                    <form id="updateLessonForm">
+                        <label for="lessonId">Lesson ID</label>
+                        <input id="lessonId" name="lesson_id" type="number" required>
+
+                        <label for="lessonCustomerId">Customer ID</label>
+                        <input id="lessonCustomerId" name="customer_id" type="number" min="1" required>
+
+                        <label for="lessonStaffId">Staff ID</label>
+                        <input id="lessonStaffId" name="staff_id" type="number" min="1" required>
+
+                        <label for="lessonVehicleId">Vehicle ID</label>
+                        <input id="lessonVehicleId" name="vehicle_id" type="number" min="1" required>
+
+                        <label for="lessonDate">Lesson Date</label>
+                        <input id="lessonDate" name="lesson_date" type="date" required>
+
+                        <label for="lessonTime">Lesson Time</label>
+                        <input id="lessonTime" name="lesson_time" type="time" required>
+
+                        <label for="lessonStatus">Lesson Status</label>
+                        <select id="lessonStatus" name="lesson_status_code" required>
+                            <option value="SCH">SCH</option>
+                            <option value="COMP">COMP</option>
+                            <option value="CANC">CANC</option>
+                            <option value="NOSH">NOSH</option>
+                        </select>
+
+                        <label for="lessonPrice">Price</label>
+                        <input id="lessonPrice" name="price" type="number" min="0" step="0.01" required>
+
+                        <label for="lessonDetails">Details</label>
+                        <input id="lessonDetails" name="other_lesson_details" type="text">
+
+                        <button type="submit">Update Lesson</button>
+                    </form>
+                </section>
+            </div>
             <section class="tableSection">
                 <h2>Customers</h2>
                 <table>
@@ -100,17 +179,21 @@
                             <th>Lesson ID</th>
                             <th>Customer ID</th>
                             <th>Staff ID</th>
+                            <th>Vehicle ID</th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Status</th>
                             <th>Price</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody id="lessonTableBody"></tbody>
                 </table>
             </section>
+            
         </div>
     </div>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="app.js"></script>
 </body>
 </html>
