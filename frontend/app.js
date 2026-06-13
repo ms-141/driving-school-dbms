@@ -167,15 +167,15 @@ addCustomerForm.addEventListener("submit", function (event) {
         customer_id: newId,
         customer_address_id: 0,
         customer_status_code: document.getElementById("customerStatus").value,
-        date_became_customer: new Date().toISOString().slice(0, 10),
-        date_of_birth: "2000-01-01",
+        date_became_customer: document.getElementById("customerDateBecame").value,
+        date_of_birth: document.getElementById("customerDateOfBirth").value,
         first_name: document.getElementById("customerFirstName").value.trim(),
         last_name: document.getElementById("customerLastName").value.trim(),
-        amount_outstanding: 0,
+        amount_outstanding: parseFloat(document.getElementById("customerOutstanding").value) || 0,
         email_address: document.getElementById("customerEmail").value.trim(),
         phone_number: document.getElementById("customerPhone").value.trim(),
-        cell_mobile_phone_number: "",
-        other_customer_details: "Added from form"
+        cell_mobile_phone_number: document.getElementById("customerCellPhone").value.trim(),
+        other_customer_details: document.getElementById("customerDetails").value.trim()
     };
 
     supabase.from("customers").insert([newCustomer]).then(function (result) {
@@ -213,7 +213,11 @@ updateCustomerForm.addEventListener("submit", function (event) {
         email_address: document.getElementById("updateCustomerEmail").value.trim(),
         phone_number: document.getElementById("updateCustomerPhone").value.trim(),
         customer_status_code: document.getElementById("updateCustomerStatus").value,
-        amount_outstanding: Number(document.getElementById("updateCustomerOutstanding").value)
+        date_of_birth: document.getElementById("updateCustomerDateOfBirth").value,
+        date_became_customer: document.getElementById("updateCustomerDateBecame").value,
+        cell_mobile_phone_number: document.getElementById("updateCustomerCellPhone").value.trim(),
+        amount_outstanding: parseFloat(document.getElementById("updateCustomerOutstanding").value) || 0,
+        other_customer_details: document.getElementById("updateCustomerDetails").value.trim()
     };
 
     supabase
@@ -337,7 +341,11 @@ customerTableBody.addEventListener("click", function (event) {
                 document.getElementById("updateCustomerEmail").value = customers[i].email_address || "";
                 document.getElementById("updateCustomerPhone").value = customers[i].phone_number || "";
                 document.getElementById("updateCustomerStatus").value = customers[i].customer_status_code || "GOOD";
+                document.getElementById("updateCustomerDateOfBirth").value = customers[i].date_of_birth || "";
+                document.getElementById("updateCustomerDateBecame").value = customers[i].date_became_customer || "";
+                document.getElementById("updateCustomerCellPhone").value = customers[i].cell_mobile_phone_number || "";
                 document.getElementById("updateCustomerOutstanding").value = Number(customers[i].amount_outstanding || 0);
+                document.getElementById("updateCustomerDetails").value = customers[i].other_customer_details || "";
                 break;
             }
         }
