@@ -115,40 +115,28 @@ function loadLessons() {
 }
 
 function loadData() {
-    const timeoutPromise = new Promise(function (resolve, reject) {
-        setTimeout(function () {
-            reject(new Error("Request timeout after 10 seconds. Check network or Supabase credentials."));
-        }, 10000);
-    });
+    console.log("loadData called");
 
-    return Promise.race([
-        Promise.all([loadCustomers(), loadLessons()]).then(function (results) {
-            const customerResult = results[0];
-            const lessonResult = results[1];
-
-            if (customerResult.error) {
-                throw customerResult.error;
-            }
-
-            if (lessonResult.error) {
-                throw lessonResult.error;
-            }
-
-            customers = customerResult.data || [];
-            lessons = lessonResult.data || [];
-
+    loadCustomers()
+        .then(function (result) {
+            console.log("Customers result:", result);
+            if (result.error) throw result.error;
+            customers = result.data || [];
+            return loadLessons();
+        })
+        .then(function (result) {
+            console.log("Lessons result:", result);
+            if (result.error) throw result.error;
+            lessons = result.data || [];
             if (syncNoteEl) {
-                syncNoteEl.textContent = "Connected to Supabase.";
+                syncNoteEl.textContent = "Connected to Supabase. Loaded " + customers.length + " customers, " + lessons.length + " lessons.";
             }
-
             redrawEverything();
-        }),
-        timeoutPromise
-    ])
+        })
         .catch(function (error) {
-            console.error("Load error:", error);
+            console.error("Full error:", error);
             if (syncNoteEl) {
-                syncNoteEl.textContent = "Supabase error: " + error.message;
+                syncNoteEl.textContent = "Error: " + (error?.message || JSON.stringify(error));
             }
         });
 }
