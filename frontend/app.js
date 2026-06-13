@@ -115,8 +115,14 @@ function loadLessons() {
 }
 
 function loadData() {
-    return Promise.all([loadCustomers(), loadLessons()])
-        .then(function (results) {
+    const timeoutPromise = new Promise(function (resolve, reject) {
+        setTimeout(function () {
+            reject(new Error("Request timeout after 10 seconds. Check network or Supabase credentials."));
+        }, 10000);
+    });
+
+    return Promise.race([
+        Promise.all([loadCustomers(), loadLessons()]).then(function (results) {
             const customerResult = results[0];
             const lessonResult = results[1];
 
@@ -136,8 +142,11 @@ function loadData() {
             }
 
             redrawEverything();
-        })
+        }),
+        timeoutPromise
+    ])
         .catch(function (error) {
+            console.error("Load error:", error);
             if (syncNoteEl) {
                 syncNoteEl.textContent = "Supabase error: " + error.message;
             }
