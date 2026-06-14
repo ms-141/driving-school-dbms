@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Driving School</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="loginPage">
+    <main class="loginWrap">
+        <h1>Admin Login</h1>
+        <p>Sign in to continue.</p>
+
+        <form id="loginForm" class="loginForm">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" autocomplete="username" required>
+
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p id="loginError" class="loginError" aria-live="polite"></p>
+        <p class="loginHint">Demo: admin / admin123</p>
+    </main>
+
+    <script src="login.js"></script>
+</body>
+</html>

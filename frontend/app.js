@@ -1,4 +1,36 @@
 (function () {
+    const AUTH_STORAGE_KEY = "dsms_admin_auth";
+
+    function getAuthSession() {
+        const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+        if (!raw) {
+            return null;
+        }
+
+        try {
+            const session = JSON.parse(raw);
+            if (!session || !session.expiresAt) {
+                return null;
+            }
+
+            if (Date.now() > Number(session.expiresAt)) {
+                localStorage.removeItem(AUTH_STORAGE_KEY);
+                return null;
+            }
+
+            return session;
+        } catch (_error) {
+            localStorage.removeItem(AUTH_STORAGE_KEY);
+            return null;
+        }
+    }
+
+    const authSession = getAuthSession();
+    if (!authSession) {
+        window.location.href = "login.html";
+        return;
+    }
+
     let customers = [];
     let lessons = [];
 
@@ -18,6 +50,7 @@
     const reportTableHeadRow = document.getElementById("reportTableHeadRow");
     const reportTableBody = document.getElementById("reportTableBody");
     const viewReportBtns = document.querySelectorAll(".viewReportBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
 
     const addCustomerForm = document.getElementById("addCustomerForm");
     const updateCustomerForm = document.getElementById("updateCustomerForm");
@@ -502,5 +535,12 @@
     });
 
     loadData();
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+            localStorage.removeItem(AUTH_STORAGE_KEY);
+            window.location.href = "login.html";
+        });
+    }
 
 })();
