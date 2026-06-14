@@ -350,34 +350,60 @@
             return;
         }
 
-        let newId = 1;
-        for (let i = 0; i < lessons.length; i += 1) {
-            if (lessons[i].lesson_id >= newId) {
-                newId = lessons[i].lesson_id + 1;
-            }
-        }
+        const staffId = Number(document.getElementById("addLessonStaffId").value);
+        const vehicleId = Number(document.getElementById("addLessonVehicleId").value);
+        const lessonDate = document.getElementById("addLessonDate").value;
+        const lessonTime = document.getElementById("addLessonTime").value;
+        const lessonStatus = document.getElementById("addLessonStatus").value;
+        const price = Number(document.getElementById("addLessonPrice").value);
+        const paidAtBooking = document.getElementById("addLessonPaidAtBooking").checked;
+        const paymentMethod = document.getElementById("addLessonPaymentMethod").value;
 
-        const newLesson = {
-            lesson_id: newId,
-            customer_id: customerId,
-            staff_id: Number(document.getElementById("addLessonStaffId").value),
-            vehicle_id: Number(document.getElementById("addLessonVehicleId").value),
-            lesson_date: document.getElementById("addLessonDate").value,
-            lesson_time: document.getElementById("addLessonTime").value,
-            lesson_status_code: document.getElementById("addLessonStatus").value,
-            price: Number(document.getElementById("addLessonPrice").value),
-            other_lesson_details: document.getElementById("addLessonDetails").value.trim()
-        };
+        supabaseClient
+            .rpc("add_lesson_reservation", {
+                p_customer_id: customerId,
+                p_lesson_date: lessonDate,
+                p_lesson_time: lessonTime,
+                p_price: price,
+                p_vehicle_id: vehicleId,
+                p_staff_id: staffId,
+                p_lesson_status_code: lessonStatus
+            })
+            .then(function (result) {
+                if (result.error) {
+                    alert("Error: " + result.error.message);
+                    return;
+                }
 
-        supabaseClient.from("lessons").insert([newLesson]).then(function (result) {
-            if (result.error) {
-                alert(result.error.message);
-                return;
-            }
+                const message = result.data || "";
+                if (String(message).toUpperCase().startsWith("ERROR")) {
+                    alert(message);
+                    return;
+                }
 
-            addLessonForm.reset();
-            loadData();
-        });
+                if (paidAtBooking) {
+                    return supabaseClient.rpc("sp_record_payment", {
+                        p_customer_id: customerId,
+                        p_datetime_payment: new Date().toISOString(),
+                        p_payment_method_code: paymentMethod,
+                        p_amount_payment: price,
+                        p_other_payment_details: "Paid at booking"
+                    });
+                }
+
+                return null;
+            })
+            .then(function (paymentResult) {
+                if (paymentResult && paymentResult.error) {
+                    alert("Lesson created, but payment error: " + paymentResult.error.message);
+                }
+
+                addLessonForm.reset();
+                loadData();
+            })
+            .catch(function (error) {
+                alert("Unexpected error: " + (error.message || JSON.stringify(error)));
+            });
     });
 
     updateLessonForm.addEventListener("submit", function (event) {

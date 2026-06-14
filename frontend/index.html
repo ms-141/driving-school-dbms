@@ -140,6 +140,19 @@
                         <label for="addLessonDetails">Details</label>
                         <input id="addLessonDetails" name="other_lesson_details" type="text">
 
+                        <label>
+                            <input id="addLessonPaidAtBooking" name="paid_at_booking" type="checkbox">
+                            Paid at booking
+                        </label>
+
+                        <label for="addLessonPaymentMethod">Payment Method</label>
+                        <select id="addLessonPaymentMethod" name="payment_method_code">
+                            <option value="CASH">Cash</option>
+                            <option value="CARD">Card</option>
+                            <option value="ETRANSFER">E-Transfer</option>
+                            <option value="CHEQUE">Cheque</option>
+                        </select>
+
                         <button type="submit">Create Lesson</button>
                     </form>
                 </section>
