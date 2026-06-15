@@ -470,6 +470,8 @@
                     document.getElementById("updateCustomerCellPhone").value = customers[i].cell_mobile_phone_number || "";
                     document.getElementById("updateCustomerOutstanding").value = Number(customers[i].amount_outstanding || 0);
                     document.getElementById("updateCustomerDetails").value = customers[i].other_customer_details || "";
+
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     break;
                 }
             }
@@ -530,6 +532,8 @@
                     document.getElementById("lessonStatus").value = lessons[i].lesson_status_code || "SCH";
                     document.getElementById("lessonPrice").value = Number(lessons[i].price || 0);
                     document.getElementById("lessonDetails").value = lessons[i].other_lesson_details || "";
+
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     break;
                 }
             }
