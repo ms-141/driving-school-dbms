@@ -20,6 +20,33 @@
             <div class="graph3">No-Show Lessons: <strong id="noShowLessons">0</strong></div>
             <div class="graph4">Outstanding Fees: <strong id="outstandingFees">$0</strong></div>
 
+            <section class="tableSection">
+                <h2>Quick Views</h2>
+                <div class="viewButtons">
+                    <button type="button" class="viewReportBtn" data-view="vw_upcominglessons">Upcoming Lessons View</button>
+                    <button type="button" class="viewReportBtn" data-view="vw_instructorschedule">Instructor Schedule View</button>
+                    <button type="button" class="viewReportBtn" data-view="vw_customerlessonhistory">Customer Lesson History View</button>
+                    <button type="button" class="viewReportBtn" data-view="vw_customerpaymentsummary">Customer Payment Summary View</button>
+                    <button type="button" class="viewReportBtn" data-view="vw_customerswithnolessons">Customers With No Lessons View</button>
+                </div>
+                <div class="reportButton">
+                    <h2>Report Views</h2>
+                    <button type="button" class="viewReportBtn" data-view="vw_customers_noshows">Customers with No-Shows Report</button>
+                    <button type="button" class="viewReportBtn" data-view="vw_instructor_revenue">Revenue by Instructor Report</button>
+                    <button type="button" class="viewReportBtn" data-view="vw_completion_rate_by_status">Completion Rate by Customer Status Report</button>
+                    
+                </div>
+                <p id="reportNote">Click a button to load view results.</p>
+                <div class="reportTableWrap">
+                    <table>
+                        <thead>
+                            <tr id="reportTableHeadRow"></tr>
+                        </thead>
+                        <tbody id="reportTableBody"></tbody>
+                    </table>
+                </div>
+            </section>
+
         </div>
         <div class="infoChange">
             <h1>CRUD operations</h1>
@@ -230,33 +257,6 @@
                     </thead>
                     <tbody id="lessonTableBody"></tbody>
                 </table>
-            </section>
-
-            <section class="tableSection">
-                <h2>Quick Views</h2>
-                <div class="viewButtons">
-                    <button type="button" class="viewReportBtn" data-view="vw_upcominglessons">Upcoming Lessons View</button>
-                    <button type="button" class="viewReportBtn" data-view="vw_instructorschedule">Instructor Schedule View</button>
-                    <button type="button" class="viewReportBtn" data-view="vw_customerlessonhistory">Customer Lesson History View</button>
-                    <button type="button" class="viewReportBtn" data-view="vw_customerpaymentsummary">Customer Payment Summary View</button>
-                    <button type="button" class="viewReportBtn" data-view="vw_customerswithnolessons">Customers With No Lessons View</button>
-                </div>
-                <div class="reportButton">
-                    <h2>Report Views</h2>
-                    <button type="button" class="viewReportBtn" data-view="vw_customers_noshows">Customers with No-Shows Report</button>
-                    <button type="button" class="viewReportBtn" data-view="vw_instructor_revenue">Revenue by Instructor Report</button>
-                    <button type="button" class="viewReportBtn" data-view="vw_completion_rate_by_status">Completion Rate by Customer Status Report</button>
-                    
-                </div>
-                <p id="reportNote">Click a button to load view results.</p>
-                <div class="reportTableWrap">
-                    <table>
-                        <thead>
-                            <tr id="reportTableHeadRow"></tr>
-                        </thead>
-                        <tbody id="reportTableBody"></tbody>
-                    </table>
-                </div>
             </section>
             
         </div>
