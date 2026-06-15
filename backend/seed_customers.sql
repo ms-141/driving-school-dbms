@@ -25,6 +25,7 @@ insert into public.customers (
   cell_mobile_phone_number,
   other_customer_details
 )
+OVERRIDING SYSTEM VALUE
 values
   (101, null, 'GOOD', '2026-01-05', '2001-03-14', 'Ava', 'Nguyen', 0.00, 'ava.nguyen@example.com', '604-555-0101', '604-555-1101', 'Seed script row'),
   (102, null, 'GOOD', '2026-01-10', '1999-08-21', 'Liam', 'Patel', 35.50, 'liam.patel@example.com', '604-555-0102', '604-555-1102', 'Seed script row'),
@@ -60,20 +61,28 @@ values
 on conflict (lesson_status_code)
 do update set lesson_status_description = excluded.lesson_status_description;
 
--- Minimal instructor and vehicle rows for lesson foreign keys
+-- Instructor and vehicle rows for lesson foreign keys
 insert into public.staff (staff_id, first_name, last_name)
+OVERRIDING SYSTEM VALUE
 values
-  (1, 'Alex', 'Instructor'),
-  (2, 'Jordan', 'Instructor')
+  (1, 'Alex', 'Rivera'),
+  (2, 'Jordan', 'Chen'),
+  (3, 'Marcus', 'Thompson'),
+  (4, 'Priya', 'Singh'),
+  (5, 'Sarah', 'Kim')
 on conflict (staff_id)
 do update set
   first_name = excluded.first_name,
   last_name = excluded.last_name;
 
 insert into public.vehicles (vehicle_id, vehicle_details)
+OVERRIDING SYSTEM VALUE
 values
   (1, 'Honda Civic - Auto'),
-  (2, 'Toyota Corolla - Manual')
+  (2, 'Toyota Corolla - Manual'),
+  (3, 'Ford F-150 - Auto'),
+  (4, 'Chevrolet Camaro - Manual'),
+  (5, 'Nissan Skyline R34 GT-R - Manual')
 on conflict (vehicle_id)
 do update set vehicle_details = excluded.vehicle_details;
 
@@ -89,6 +98,7 @@ insert into public.lessons (
   price,
   other_lesson_details
 )
+OVERRIDING SYSTEM VALUE
 values
   (201, 101, 'SCH',  1, 1, '2026-03-03', '09:00', 65.00, 'City driving practice'),
   (202, 102, 'COMP', 2, 1, '2026-03-04', '10:00', 70.00, 'Completed highway session'),
