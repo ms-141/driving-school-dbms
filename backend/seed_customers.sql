@@ -1,5 +1,5 @@
 -- Data population script for Requirement 5
--- Populates one main table: customers (10 records)
+-- Populates customers (10 records), staff (5 records), vehicles (5 records), and lessons (20 records)
 -- Safe to re-run using ON CONFLICT
 
 -- Make sure status lookup values exist
@@ -86,7 +86,7 @@ values
 on conflict (vehicle_id)
 do update set vehicle_details = excluded.vehicle_details;
 
--- Seed lessons table with 10 rows
+-- Seed lessons table with expanded data (mix of past and future dates, all vehicles and instructors)
 insert into public.lessons (
   lesson_id,
   customer_id,
@@ -100,16 +100,26 @@ insert into public.lessons (
 )
 OVERRIDING SYSTEM VALUE
 values
-  (201, 101, 'SCH',  1, 1, '2026-03-03', '09:00', 65.00, 'City driving practice'),
-  (202, 102, 'COMP', 2, 1, '2026-03-04', '10:00', 70.00, 'Completed highway session'),
-  (203, 103, 'SCH',  1, 2, '2026-03-05', '11:00', 65.00, 'Parking focus'),
-  (204, 104, 'CANC', 2, 2, '2026-03-06', '13:00', 70.00, 'Cancelled by student'),
-  (205, 105, 'COMP', 1, 1, '2026-03-07', '14:00', 75.00, 'Completed defensive driving'),
-  (206, 106, 'NOSH', 2, 2, '2026-03-08', '15:00', 70.00, 'No-show'),
-  (207, 107, 'SCH',  1, 1, '2026-03-09', '09:30', 65.00, 'Lane change drills'),
-  (208, 108, 'SCH',  2, 2, '2026-03-10', '10:30', 70.00, 'Manual clutch practice'),
-  (209, 109, 'COMP', 1, 1, '2026-03-11', '12:00', 80.00, 'Road test prep'),
-  (210, 110, 'SCH',  2, 2, '2026-03-12', '16:00', 75.00, 'Evening session')
+  (201, 101, 'SCH',  1, 1, '2026-07-03', '09:00', 65.00, 'City driving practice'),
+  (202, 102, 'COMP', 2, 3, '2026-05-15', '10:00', 70.00, 'Completed highway session'),
+  (203, 103, 'SCH',  3, 2, '2026-07-18', '11:00', 85.00, 'Parking focus with F-150'),
+  (204, 104, 'CANC', 4, 4, '2026-05-20', '13:00', 95.00, 'Cancelled by student'),
+  (205, 105, 'COMP', 1, 5, '2026-05-22', '14:00', 75.00, 'Completed defensive driving'),
+  (206, 106, 'NOSH', 2, 2, '2026-06-01', '15:00', 70.00, 'No-show'),
+  (207, 107, 'SCH',  5, 3, '2026-07-25', '09:30', 120.00, 'Special R34 Skyline session'),
+  (208, 108, 'SCH',  4, 4, '2026-08-02', '10:30', 95.00, 'Manual Camaro clutch practice'),
+  (209, 109, 'COMP', 1, 1, '2026-06-05', '12:00', 80.00, 'Road test prep'),
+  (210, 110, 'SCH',  3, 5, '2026-08-10', '16:00', 85.00, 'Evening F-150 session'),
+  (211, 101, 'COMP', 2, 2, '2026-05-10', '13:00', 70.00, 'Completed manual lesson'),
+  (212, 103, 'COMP', 4, 4, '2026-05-25', '14:30', 95.00, 'Completed Camaro session'),
+  (213, 104, 'COMP', 1, 1, '2026-06-02', '09:00', 65.00, 'Completed basic training'),
+  (214, 105, 'COMP', 5, 3, '2026-06-08', '11:00', 120.00, 'Completed R34 advanced'),
+  (215, 107, 'COMP', 3, 5, '2026-06-10', '15:00', 85.00, 'Completed truck handling'),
+  (216, 108, 'COMP', 2, 2, '2026-06-12', '10:00', 70.00, 'Completed standard drive'),
+  (217, 102, 'COMP', 1, 4, '2026-05-28', '16:00', 65.00, 'Completed refresher course'),
+  (218, 106, 'COMP', 3, 1, '2026-05-30', '08:30', 85.00, 'Completed F-150 test'),
+  (219, 109, 'NOSH', 4, 5, '2026-06-11', '13:30', 95.00, 'No-show Camaro'),
+  (220, 110, 'COMP', 2, 3, '2026-06-13', '14:00', 70.00, 'Completed highway training')
 on conflict (lesson_id)
 do update set
   customer_id = excluded.customer_id,
@@ -129,5 +139,5 @@ order by customer_id;
 
 select lesson_id, customer_id, staff_id, vehicle_id, lesson_status_code, lesson_date, lesson_time, price
 from public.lessons
-where lesson_id between 201 and 210
+where lesson_id between 201 and 220
 order by lesson_id;
