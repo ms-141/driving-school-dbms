@@ -471,7 +471,7 @@
                     document.getElementById("updateCustomerOutstanding").value = Number(customers[i].amount_outstanding || 0);
                     document.getElementById("updateCustomerDetails").value = customers[i].other_customer_details || "";
 
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    document.querySelector('.infoChange').scrollIntoView({ behavior: 'smooth' });
                     break;
                 }
             }
@@ -533,7 +533,7 @@
                     document.getElementById("lessonPrice").value = Number(lessons[i].price || 0);
                     document.getElementById("lessonDetails").value = lessons[i].other_lesson_details || "";
 
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    document.querySelector('.infoChange').scrollIntoView({ behavior: 'smooth' });
                     break;
                 }
             }
