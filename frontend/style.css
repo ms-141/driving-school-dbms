@@ -7,6 +7,25 @@ body {
     box-sizing: border-box;
 }
 
+.title {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    font-size: large;
+    font-weight: 600;
+    height: min-content;
+    padding: -5px;
+    margin: 0px;
+}
+
+.title h1 {
+    margin: 10px 0 0 0;
+}
+
+.title p {
+    margin: 5px 0 10px 0;
+}
+
 .navbar {
     color: black;
     display: flex;
