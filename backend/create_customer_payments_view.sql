@@ -4,7 +4,6 @@ CASCADE;
 
 CREATE OR REPLACE VIEW vw_customer_payments AS
 SELECT
-    cp.payment_id,
     cp.customer_id,
     c.first_name || ' ' || c.last_name AS customer_name,
     cp.datetime_payment,

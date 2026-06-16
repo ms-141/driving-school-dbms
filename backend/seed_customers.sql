@@ -1,4 +1,3 @@
--- Data population script for Requirement 5
 -- Populates customers (11 records), staff (5 records), vehicles (5 records), and lessons (10 records)
 -- Safe to re-run using ON CONFLICT
 
